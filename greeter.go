@@ -26,7 +26,21 @@ func Greet(user string, fromutc int) {
 		fmt.Printf("Good %s, %s!", phase, user)
 	}	
 }
-
+func GreetLocal(user string) {
+	var timenow = time.Now().Local().Hour() 
+	phase := "Midnight"
+	if timenow < 6 || timenow > 22{
+		phase = "Night"
+	} else if timenow >= 6 && timenow < 12 {
+		phase = "Morning"
+	} else if timenow >= 12 && timenow < 17 {
+		phase = "Afternoon"
+	} else {
+		phase = "Evening"
+	}
+		fmt.Printf("Good %s, %s!", phase, user)
+	}	
+}
 func DisplayTime(fromutc int) {
 	if fromutc < -11 || fromutc > 13 {
 		fmt.Println("Invalid Timezone from UTC provided. Example input: 7")
@@ -35,4 +49,9 @@ func DisplayTime(fromutc int) {
 	minutenow := time.Now().UTC().Minute()
 	fmt.Printf("%d:%d", hournow, minutenow)
 	}
+}
+func DisplayTimeLocal() {
+	hournow := time.Now().Local().Hour()
+	minutenow := time.Now().Local().Minute()
+	fmt.Printf("%d:%d", hournow, minutenow)
 }
