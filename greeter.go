@@ -8,7 +8,7 @@ func Hello(user string) {
 	fmt.Printf("Hello, %s!", user)
 }
 
-func Greet(user string, fromutc int8) {
+func Greet(user string, fromutc int) {
 	if fromutc < -11 || fromutc > 13 {
 		fmt.Println("Invalid Timezone from UTC provided. Example input: 7")
 	} else {
@@ -25,4 +25,14 @@ func Greet(user string, fromutc int8) {
 	}
 		fmt.Printf("Good %s, %s!", phase, user)
 	}	
+}
+
+func DisplayTime(fromutc int) {
+	if fromutc < -11 || fromutc > 13 {
+		fmt.Println("Invalid Timezone from UTC provided. Example input: 7")
+	} else {
+	hournow := time.Now().UTC().Hour() + fromutc
+	minutenow := time.Now().UTC().Minute()
+	fmt.Printf("%d:%d", hournow, minutenow)
+	}
 }
