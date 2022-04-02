@@ -5,45 +5,28 @@ import(
 ) 
 type Timezone struct {
 	use_local bool
-	fromutc int8
+	fromutc int
 }
 func Hello(user string) {
-	fmt.Printf("Hello, %s!", user.name)
+	fmt.Printf("Hello, %s!", user)
 }
 
 func Greet(user string, fromutc int) {
-	if fromutc < -11 || fromutc > 13 {
-		fmt.Println("Invalid Timezone from UTC provided. Example input: 7")
-	} else {
-	var timenow = time.Now().UTC().Hour() + fromutc //GMT+7
-	phase := "Midnight"
-	if timenow < 6 || timenow > 22{
-		phase = "Night"
-	} else if timenow >= 6 && timenow < 12 {
-		phase = "Morning"
-	} else if timenow >= 12 && timenow < 17 {
-		phase = "Afternoon"
-	} else {
-		phase = "Evening"
-	}
-		fmt.Printf("Good %s, %s!", phase, user.name)
-	}	
+    tz := Timezone{
+    use_local:false,
+    fromutc:fromutc,
+  }
+		fmt.Printf("Good %s, %s!", tz.TimeOfTheDay(), user)
+	
 }
 func GreetLocal(user string) {
-	var timenow = time.Now().Local().Hour() 
-	phase := "Midnight"
-	if timenow < 6 || timenow > 22{
-		phase = "Night"
-	} else if timenow >= 6 && timenow < 12 {
-		phase = "Morning"
-	} else if timenow >= 12 && timenow < 17 {
-		phase = "Afternoon"
-	} else {
-		phase = "Evening"
+	totd := Timezone{
+		use_local: true,
 	}
-		fmt.Printf("Good %s, %s!", phase, user.name)
-	}	
-}
+ 
+		fmt.Printf("Good %s, %s!",totd.TimeOfTheDay(), user)
+}	
+
 func DisplayTime(fromutc int) {
 	if fromutc < -11 || fromutc > 13 {
 		fmt.Println("Invalid Timezone from UTC provided. Example input: 7")
@@ -60,10 +43,12 @@ func DisplayTimeLocal() {
 }
 
 func (t Timezone) TimeOfTheDay()(string) {
+  timenow := 0
 	if t.use_local == true {
-		var timenow = time.Now().Local().Hour() 
+		timenow = time.Now().Local().Hour() 
+  
 	} else {
-		var timenow = time.Now().UTC().Hour() + t.fromutc
+		timenow = time.Now().UTC().Hour() + t.fromutc
 	}
 
 	phase := "Midnight"
@@ -76,4 +61,10 @@ func (t Timezone) TimeOfTheDay()(string) {
 	} else {
 		phase = "Evening"
 	}
+  return phase;
 	}
+	
+
+
+
+
